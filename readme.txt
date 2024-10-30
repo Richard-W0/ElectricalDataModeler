@@ -1,1 +1,1 @@
-
+This is the main assignment for my programming course so there will be some limits set for how I can perfom things. For example constructors and functions inside classes are forbidden and I have to manually open and close files and I can't use f string. 
