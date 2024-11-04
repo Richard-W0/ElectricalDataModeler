@@ -38,6 +38,8 @@ def paaohjelma():
         elif valinta == 0:
             print("Lopetetaan.")
             break
+        else:
+            print("Tuntematon valinta, yritä uudestan.")
 
 paaohjelma()
 
