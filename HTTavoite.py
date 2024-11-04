@@ -39,4 +39,6 @@ def paaohjelma():
             print("Lopetetaan.")
             break
 
+paaohjelma()
+
 # eof
