@@ -11,6 +11,7 @@
 # vaikuttaneet siihen yllä mainituilla tavoilla.
 ######################################################################
 # Tehtävä Harjoitustyö
+import HTTavoiteKirjasto as lib
 
 def valikko():
     valikko = """Valitse haluamasi toiminto:
