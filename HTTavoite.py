@@ -26,7 +26,7 @@ def valikko():
 def paaohjelma():
     
     while True:
-        valinta = valikko
+        valinta = valikko()
         if valinta == 1:
             pass
         elif valinta == 2:
