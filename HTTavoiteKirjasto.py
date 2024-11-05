@@ -11,4 +11,17 @@
 # vaikuttaneet siihen yllä mainituilla tavoilla.
 ######################################################################
 # Tehtävä Harjoitustyö
+import time
+import math
+
+def lueTiedosto():
+    #lukee tiedoston
+
+def analysoiTiedosto():
+    #analysoi tiedoston
+
+def kirjoitaTiedostoon():
+    #kirjoittaa tiedostoon
+
+
 # eof
