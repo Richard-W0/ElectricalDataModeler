@@ -12,6 +12,8 @@
 ######################################################################
 # Tehtävä Harjoitustyö
 import HTTavoiteKirjasto as lib
+import time
+import math
 
 def valikko():
     valikko = """Valitse haluamasi toiminto:
@@ -23,15 +25,14 @@ def valikko():
     print(valikko)
     return int(input("Anna valintasi: "))
 
-
 def paaohjelma():
     
     while True:
         valinta = valikko()
         if valinta == 1:
-            pass
+            nimiLuettava = lib.kysyNimi(1)
         elif valinta == 2:
-            pass
+            nimiKirjoitettava = lib.kysyNimi(2)
         elif valinta == 3:
             pass
         elif valinta == 4:

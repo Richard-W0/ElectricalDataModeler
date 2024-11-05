@@ -14,6 +14,13 @@
 import time
 import math
 
+def kysyNimi(n):
+    if n == 1:
+        return input("Anna luettavan tiedoston nimi: ") 
+    elif n == 2:
+        return input("Anna kirjoitettavan tiedoston nimi: ")
+
+
 def lueTiedosto(tiedostoNimi):
     tiedosto = open(tiedostoNimi, "r")
 
