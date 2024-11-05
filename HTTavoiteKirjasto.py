@@ -14,8 +14,8 @@
 import time
 import math
 
-def lueTiedosto():
-    #lukee tiedoston
+def lueTiedosto(tiedostoNimi):
+    tiedosto = open(tiedostoNimi, "r")
 
 def analysoiTiedosto():
     #analysoi tiedoston
