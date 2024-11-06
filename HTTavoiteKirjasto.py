@@ -14,6 +14,9 @@
 import time
 import math
 
+class Tiedosto:
+    pass
+
 def kysyNimi(n):
     if n == 1:
         return input("Anna luettavan tiedoston nimi: ") 
