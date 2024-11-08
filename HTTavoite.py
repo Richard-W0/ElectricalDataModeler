@@ -12,8 +12,6 @@
 ######################################################################
 # Tehtävä Harjoitustyö
 import HTTavoiteKirjasto as lib
-import time
-import math
 
 def valikko():
     valikko = """Valitse haluamasi toiminto:
