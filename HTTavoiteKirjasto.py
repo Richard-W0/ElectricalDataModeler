@@ -34,6 +34,7 @@ def lueTiedosto(tiedostoNimi):
         while len(rivi) > 0:
             pass
     except FileNotFoundError:
+        print("Tiedostoa ei löytynyt, yritä uudestaan.")
         
 
 
