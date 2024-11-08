@@ -13,9 +13,12 @@
 # Tehtävä Harjoitustyö
 import time
 import math
+import numpy as np
 
 class Tiedosto:
-    pass
+    lista = []
+    viikottainen = {}
+    kuukausittainen = {}
 
 def kysyNimi(n):
     if n == 1:
