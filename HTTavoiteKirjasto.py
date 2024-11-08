@@ -28,10 +28,13 @@ def kysyNimi(n):
 
 
 def lueTiedosto(tiedostoNimi):
-    tiedosto = open(tiedostoNimi, "r")
-    rivi = tiedosto.readline() #skipataan eka rivi
-    while len(rivi) > 0:
-        pass
+    try:
+        tiedosto = open(tiedostoNimi, "r")
+        rivi = tiedosto.readline() #skipataan eka rivi
+        while len(rivi) > 0:
+            pass
+    except FileNotFoundError:
+        
 
 
 def analysoiTiedosto():
