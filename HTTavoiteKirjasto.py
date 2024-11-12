@@ -28,7 +28,7 @@ def kysyNimi(n):
 
 
 def lueTiedosto(tiedostoNimi):
-    tiedostoLista = []
+    Tiedosto.lista.clear()
     try:
         tiedosto = open(tiedostoNimi, "r")
         rivi = tiedosto.readline() #skipataan eka rivi
@@ -38,7 +38,7 @@ def lueTiedosto(tiedostoNimi):
             aika = time.strptime(riviS[0], "%d-%m-%Y %H:%M")
             kwhNight = float(riviS[1])
             kwhDay = float(riviS[2])
-            tiedostoLista.append((aika, kwhNight, kwhDay))
+            Tiedosto.lista.append((aika, kwhNight, kwhDay))
         tiedosto.close()
     except FileNotFoundError:
         print("Tiedostoa ei löytynyt, yritä uudestaan.")
