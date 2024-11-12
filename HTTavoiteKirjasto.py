@@ -32,7 +32,9 @@ def lueTiedosto(tiedostoNimi):
         tiedosto = open(tiedostoNimi, "r")
         rivi = tiedosto.readline() #skipataan eka rivi
         while len(rivi) > 0:
-            pass
+            strip = rivi.strip()
+            riviS = strip.split(";")
+            aika = time.strptime(riviS[0], "%d-%m-%Y %H:%M")
     except FileNotFoundError:
         print("Tiedostoa ei löytynyt, yritä uudestaan.")
         
