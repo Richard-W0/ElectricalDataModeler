@@ -48,7 +48,7 @@ def lueTiedosto(tiedostoNimi):
 def analysoiTiedostoKuukaudet():
     #analysoi tiedoston
 
-def analysoiTiedostoPäivät():
+def analysoiTiedostoPaivat():
     pass
 
 def kirjoitaTiedostoon():
