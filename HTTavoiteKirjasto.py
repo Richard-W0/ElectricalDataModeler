@@ -5,6 +5,7 @@
 # Päivämäärä: 30.10.2024
 # Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat
 # lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
+# Mainitsin asiasta aikaisemmin mutta kuukausianalyysissä olevan tuple unpackin minulle näytti kaveri (ei lut opiskelija) Erik
 #
 # Mahdollisen vilppiselvityksen varalta vakuutan, että olen tehnyt itse
 # tämän tehtävän ja vain yllä mainitut henkilöt sekä lähteet ovat
@@ -51,13 +52,18 @@ def analysoiTiedostoKuukaudet():
     Tiedosto.kuukausittainen.clear()
 
     for arvo in Tiedosto.lista:
-        kuukausiNimi = time.strftime("%b", entry[0])
+
+        aika = arvo[0]
+        kwhNight = arvo[1]
+        kwhDay = arvo[2]
+
+        kuukausiNimi = time.strftime("%b", aika)
 
         if kuukausiNimi not in Tiedosto.kuukausittainen:
             Tiedosto.kuukausittainen[kuukausiNimi] = {"Yö" : 0, "Päivä" : 0, "Yhteensä" : 0}
 
-        Tiedosto.kuukausittainen[kuukausiNimi]["Yö"] += kuukausiNimi[1] / 1000 #kuukausiNimi[1] on kwh ja muutetaan se mwh
-        Tiedosto.kuukausittainen[kuukausiNimi]["Päivä"] += kuukausiNimi[2] / 1000
+        Tiedosto.kuukausittainen[kuukausiNimi]["Yö"] += kwhNight / 1000 #kuukausiNimi[1] on kwh ja muutetaan se mwh
+        Tiedosto.kuukausittainen[kuukausiNimi]["Päivä"] += kwhDay / 1000
         Tiedosto.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kuukausiNimi[1] + kuukausiNimi[2]) / 1000
 
 def analysoiTiedostoPaivat():
