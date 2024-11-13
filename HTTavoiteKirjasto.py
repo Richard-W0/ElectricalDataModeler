@@ -70,6 +70,9 @@ def analysoiTiedostoPaivat():
 
     viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
 
+    for paiva in viikonpaivat:
+        Tiedosto.viikottainen[paiva] = 0 #initialisoidaan hashmappi
+
 
 def kirjoitaTiedostoon():
     #kirjoittaa tiedostoon
