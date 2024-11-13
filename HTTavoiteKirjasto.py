@@ -32,6 +32,7 @@ def lueTiedosto(tiedostoNimi):
     try:
         tiedosto = open(tiedostoNimi, "r")
         rivi = tiedosto.readline() #skipataan eka rivi
+        rivi = tiedosto.readline()
         while len(rivi) > 0:
             strip = rivi.strip()
             riviS = strip.split(";")
@@ -39,6 +40,7 @@ def lueTiedosto(tiedostoNimi):
             kwhNight = float(riviS[1])
             kwhDay = float(riviS[2])
             Tiedosto.lista.append((aika, kwhNight, kwhDay))
+            rivi = tiedosto.readline()
         tiedosto.close()
     except FileNotFoundError:
         print("Tiedostoa ei löytynyt, yritä uudestaan.")
@@ -46,7 +48,7 @@ def lueTiedosto(tiedostoNimi):
 
 
 def analysoiTiedostoKuukaudet():
-    #analysoi tiedoston
+    Tiedosto.kuukausittainen.clear()
 
 def analysoiTiedostoPaivat():
     pass
