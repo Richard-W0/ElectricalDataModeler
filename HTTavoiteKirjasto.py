@@ -62,9 +62,9 @@ def analysoiTiedostoKuukaudet():
         if kuukausiNimi not in Tiedosto.kuukausittainen:
             Tiedosto.kuukausittainen[kuukausiNimi] = {"Yö" : 0, "Päivä" : 0, "Yhteensä" : 0}
 
-        Tiedosto.kuukausittainen[kuukausiNimi]["Yö"] += kwhNight / 1000 #kuukausiNimi[1] on kwh ja muutetaan se mwh
+        Tiedosto.kuukausittainen[kuukausiNimi]["Yö"] += kwhNight / 1000 #muunnetaan kwh mwh:hon
         Tiedosto.kuukausittainen[kuukausiNimi]["Päivä"] += kwhDay / 1000
-        Tiedosto.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kuukausiNimi[1] + kuukausiNimi[2]) / 1000
+        Tiedosto.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kwhDay + kwhNight) / 1000
 
 def analysoiTiedostoPaivat():
     pass
