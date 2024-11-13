@@ -50,6 +50,12 @@ def lueTiedosto(tiedostoNimi):
 def analysoiTiedostoKuukaudet():
     Tiedosto.kuukausittainen.clear()
 
+    for arvo in Tiedosto.lista:
+        kuukausiNimi = time.strftime("%b", entry[0])
+
+        if kuukausiNimi not in Tiedosto.kuukausittainen:
+            Tiedosto.kuukausittainen[kuukausiNimi] = 
+
 def analysoiTiedostoPaivat():
     pass
 
