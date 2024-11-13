@@ -54,7 +54,9 @@ def analysoiTiedostoKuukaudet():
         kuukausiNimi = time.strftime("%b", entry[0])
 
         if kuukausiNimi not in Tiedosto.kuukausittainen:
-            Tiedosto.kuukausittainen[kuukausiNimi] = 
+            Tiedosto.kuukausittainen[kuukausiNimi] = {"Yö" : 0, "Päivä" : 0, "Yhteensä" : 0}
+
+        Tiedosto.kuukausittainen[kuukausiNimi]["Yö"] += kuukausiNimi[1] / 100 #kuukausiNimi[1] on kwh ja muutetaan se mwh
 
 def analysoiTiedostoPaivat():
     pass
