@@ -73,6 +73,12 @@ def analysoiTiedostoPaivat():
     for paiva in viikonpaivat:
         Tiedosto.viikottainen[paiva] = 0 #initialisoidaan hashmappi
 
+    for aika, kwhNight, kwhDay in Tiedosto.lista:
+
+        viikonpaivaIndeksi = int(time.strftime("%w", aika))
+
+        viikonpaivaSuomeksi = viikonpaiaivat[viikonpaivaIndeksi]
+
 
 def kirjoitaTiedostoon():
     #kirjoittaa tiedostoon
