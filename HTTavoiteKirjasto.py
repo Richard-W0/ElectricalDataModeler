@@ -5,7 +5,6 @@
 # Päivämäärä: 30.10.2024
 # Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat
 # lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
-# Mainitsin asiasta aikaisemmin mutta kuukausianalyysissä olevan tuple unpackin minulle näytti kaveri (ei lut opiskelija) Erik
 #
 # Mahdollisen vilppiselvityksen varalta vakuutan, että olen tehnyt itse
 # tämän tehtävän ja vain yllä mainitut henkilöt sekä lähteet ovat
@@ -67,7 +66,10 @@ def analysoiTiedostoKuukaudet():
         Tiedosto.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kwhDay + kwhNight) / 1000
 
 def analysoiTiedostoPaivat():
-    pass
+    Tiedosto.viikottainen.clear()
+
+    viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
+
 
 def kirjoitaTiedostoon():
     #kirjoittaa tiedostoon
