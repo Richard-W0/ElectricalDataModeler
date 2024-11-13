@@ -58,6 +58,7 @@ def analysoiTiedostoKuukaudet():
 
         Tiedosto.kuukausittainen[kuukausiNimi]["Yö"] += kuukausiNimi[1] / 1000 #kuukausiNimi[1] on kwh ja muutetaan se mwh
         Tiedosto.kuukausittainen[kuukausiNimi]["Päivä"] += kuukausiNimi[2] / 1000
+        Tiedosto.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kuukausiNimi[1] + kuukausiNimi[2]) / 1000
 
 def analysoiTiedostoPaivat():
     pass
@@ -66,4 +67,4 @@ def kirjoitaTiedostoon():
     #kirjoittaa tiedostoon
 
 
-# eof
+#eof
