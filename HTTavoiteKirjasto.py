@@ -12,6 +12,7 @@
 ######################################################################
 # Tehtävä Harjoitustyö
 import time
+import sys
 import math
 import numpy as np
 
@@ -83,5 +84,9 @@ def analysoiTiedostoPaivat():
 def kirjoitaTiedostoon():
     #kirjoittaa tiedostoon
 
+#Lue tiedostoon OS error
+#if len data == 0 ei tietoaja analysoitavaksi
+#kirjoita tiedostoon OS error kanssa (sys.exit(0))
+#viikkoanalyysiin sama os error try exceptiin
 
 #eof

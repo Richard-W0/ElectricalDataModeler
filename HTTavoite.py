@@ -12,6 +12,7 @@
 ######################################################################
 # Tehtävä Harjoitustyö
 import HTTavoiteKirjasto as lib
+import sys
 
 def valikko():
     valikko = """Valitse haluamasi toiminto:
