@@ -43,7 +43,7 @@ def lueTiedosto(tiedostoNimi):
             Tiedosto.lista.append((aika, kwhNight, kwhDay))
             rivi = tiedosto.readline()
         tiedosto.close()
-    except FileNotFoundError:
+    except OSError:
         print("Tiedostoa ei löytynyt, yritä uudestaan.")
         
 
