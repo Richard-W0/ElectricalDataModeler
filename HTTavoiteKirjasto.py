@@ -72,14 +72,11 @@ def analysoiTiedostoKuukaudet():
 def analysoiTiedostoPaivat():
     Tiedosto.viikottainen.clear()
 
-
     for paiva in viikonpaivat:
         Tiedosto.viikottainen[paiva] = 0 #initialisoidaan hashmappi
 
     for aika, kwhNight, kwhDay in Tiedosto.lista:
-
         viikonpaivaIndeksi = int(time.strftime("%w", aika))
-
         viikonpaivaSuomeksi = viikonpaiaivat[viikonpaivaIndeksi]
 
 
