@@ -16,6 +16,9 @@ import sys
 import math
 import numpy as np
 
+
+viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
+
 class Tiedosto:
     lista = []
     viikottainen = {}
@@ -69,7 +72,6 @@ def analysoiTiedostoKuukaudet():
 def analysoiTiedostoPaivat():
     Tiedosto.viikottainen.clear()
 
-    viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
 
     for paiva in viikonpaivat:
         Tiedosto.viikottainen[paiva] = 0 #initialisoidaan hashmappi
