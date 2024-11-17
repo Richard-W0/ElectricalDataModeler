@@ -161,11 +161,11 @@ def kirjoitaLampotila(tiedostoNimi):
             paivittainenKulutus[paiva]["Päivä"] +=kwhDay
             paivittainenKulutus[paiva]["Yö"] += kwhNight
 
-            for key, value in paivittainenKulutus.items():
+        for key, value in paivittainenKulutus.items():
                 
-                lampotila = TIEDOSTO.lampotila.get(paiva)
-                tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f};{4}\n".format(paiva, consumption['night'], consumption['day'], yhteensa, lampotila))
-
+            lampotila = TIEDOSTO.lampotila.get(paiva)
+            yhteensa = value["Yö"] + value["Päivä"]
+            tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f};{4}\n".format(key, value["Yö"], value["Päivä"], yhteensa, lampotila))
 
         tiedosto.close()
     except OSError:
