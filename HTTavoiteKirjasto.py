@@ -46,7 +46,7 @@ def lueTiedosto(tiedostoNimi):
             kwhDay = float(riviS[2])
             Tiedosto.lista.append((aika, kwhNight, kwhDay))
             rivi = tiedosto.readline()
-    tiedosto.close()
+        tiedosto.close()
     except OSError:
         print("Tiedostoa ei löytynyt, yritä uudestaan.")
     return None
@@ -80,10 +80,10 @@ def analysoiTiedostoPaivat():
 
     for aika, kwhNight, kwhDay in Tiedosto.lista:
         viikonpaivaIndeksi = int(time.strftime("%w", aika))
+        viikonpaivaIndeksi = (viikonpaivaIndeksi + 6) % 7 #if this works Im the smartest man alive
         viikonpaivaSuomeksi = viikonpaivat[viikonpaivaIndeksi]
 
         totalMwh = (kwhDay + kwhNight) / 1000
-        viikonpaivaIndeksi = (viikonpaivaIndeksi + 6) % 7 #if this works Im the smartest man alive
         Tiedosto.viikottainen[viikonpaivaSuomeksi] += totalMwh
     return None
 
