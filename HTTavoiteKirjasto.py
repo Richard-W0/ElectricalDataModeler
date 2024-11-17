@@ -14,7 +14,7 @@
 import time
 import os
 import sys
-import numpy as np
+#import numpy as np
 
 
 viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
@@ -29,6 +29,7 @@ def kysyNimi(n):
         return input("Anna luettavan tiedoston nimi: ") 
     elif n == 2:
         return input("Anna kirjoitettavan tiedoston nimi: ")
+    return None
 
 
 def lueTiedosto(tiedostoNimi):
@@ -48,6 +49,7 @@ def lueTiedosto(tiedostoNimi):
         tiedosto.close()
     except OSError:
         print("Tiedostoa ei löytynyt, yritä uudestaan.")
+    return None
         
 
 
@@ -68,6 +70,7 @@ def analysoiTiedostoKuukaudet():
         Tiedosto.kuukausittainen[kuukausiNimi]["Yö"] += kwhNight / 1000 #muunnetaan kwh mwh:hon
         Tiedosto.kuukausittainen[kuukausiNimi]["Päivä"] += kwhDay / 1000
         Tiedosto.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kwhDay + kwhNight) / 1000
+    return None
 
 def analysoiTiedostoPaivat():
     Tiedosto.viikottainen.clear()
@@ -77,10 +80,11 @@ def analysoiTiedostoPaivat():
 
     for aika, kwhNight, kwhDay in Tiedosto.lista:
         viikonpaivaIndeksi = int(time.strftime("%w", aika))
-        viikonpaivaSuomeksi = viikonpaiaivat[viikonpaivaIndeksi]
+        viikonpaivaSuomeksi = viikonpaivat[viikonpaivaIndeksi]
 
         totalMwh = (kwhDay + kwhNight) / 1000
         Tiedosto.viikottainen[viikonpaivaSuomeksi] += totalMwh
+    return None
 
 
 def kirjoitaTiedostoonKuukausittainen(tiedostoNimi):
@@ -95,6 +99,7 @@ def kirjoitaTiedostoonKuukausittainen(tiedostoNimi):
     except OSError:
         print("Virhe tiedostoon kirjoittamisessa:")
         sys.exit(0)
+    return None
 
 def kirjoitaTiedostoonViikottainen(tiedostoNimi):
     try:
@@ -106,6 +111,7 @@ def kirjoitaTiedostoonViikottainen(tiedostoNimi):
     except OSError:
         print("Virhe tiedostoon kirjoittamisessa:")
         sys.exit(0)
+    return None
 
 #Lue tiedostoon OS error
 #if len data == 0 ei tietoaja analysoitavaksi

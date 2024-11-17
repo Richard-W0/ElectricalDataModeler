@@ -45,6 +45,7 @@ def paaohjelma():
             break
         else:
             print("Tuntematon valinta, yritä uudestan.")
+    return None
 
 paaohjelma()
 
