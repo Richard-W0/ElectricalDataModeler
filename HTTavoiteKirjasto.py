@@ -152,10 +152,20 @@ def kirjoitaLampotila(tiedostoNimi):
         tiedosto.write("Päivittäiset kulutukset (kWh) ja lämpötila:\n")
         tiedosto.write("Pvm;Yö;Päivä;Yhteensä;Lämpötila\n")
 
+        paivittainenKulutus = {}
+
         for aika, kwhNight, kwhDay in TIEDOSTO.lista:
             paiva = time.strftime("%d.%m.%Y", aika)
-            lampotila = TIEDOSTO.lampotila.get(paiva)
-            tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f};{4}\n".format(paiva, kwhNight, kwhDay, kwhNight + kwhDay, lampotila))
+            if paiva not in paivittainenKulutus:
+                paivittainenKulutus[paiva] = {"Päivä": 0, "Yö": 0} #Lisää nestattuja hashmappeja
+            paivittainenKulutus[paiva]["Päivä"] +=kwhDay
+            paivittainenKulutus[paiva]["Yö"] += kwhNight
+
+            for key, value in paivittainenKulutus.items():
+                
+                lampotila = TIEDOSTO.lampotila.get(paiva)
+                tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f};{4}\n".format(paiva, consumption['night'], consumption['day'], yhteensa, lampotila))
+
 
         tiedosto.close()
     except OSError:
