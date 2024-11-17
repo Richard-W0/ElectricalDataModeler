@@ -45,8 +45,14 @@ def paaohjelma():
             break
         else:
             print("Tuntematon valinta, yritä uudestan.")
+    lib.Tiedosto.lista.clear()
+    lib.Tiedosto.viikottainen.clear()
+    lib.Tiedosto.kuukausittainen.clear()
+    
     return None
 
 paaohjelma()
+print()
+print("Kiitos ohjelman käytöstä.")
 
 # eof

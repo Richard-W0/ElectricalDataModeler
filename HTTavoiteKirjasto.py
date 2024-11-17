@@ -46,7 +46,7 @@ def lueTiedosto(tiedostoNimi):
             kwhDay = float(riviS[2])
             Tiedosto.lista.append((aika, kwhNight, kwhDay))
             rivi = tiedosto.readline()
-        tiedosto.close()
+    tiedosto.close()
     except OSError:
         print("Tiedostoa ei löytynyt, yritä uudestaan.")
     return None
@@ -83,6 +83,7 @@ def analysoiTiedostoPaivat():
         viikonpaivaSuomeksi = viikonpaivat[viikonpaivaIndeksi]
 
         totalMwh = (kwhDay + kwhNight) / 1000
+        viikonpaivaIndeksi = (viikonpaivaIndeksi + 6) % 7 #if this works Im the smartest man alive
         Tiedosto.viikottainen[viikonpaivaSuomeksi] += totalMwh
     return None
 
@@ -93,8 +94,7 @@ def kirjoitaTiedostoonKuukausittainen(tiedostoNimi):
         tiedosto.write("Kuukausittaiset kulutukset (MWh):\n")
         tiedosto.write("Kuukausi;Yö;Päivä;Yhteensä\n")
         for kuukausi, arvot in Tiedosto.kuukausittainen.items():
-            tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f}\n".format(
-                kuukausi, arvot["Yö"], arvot["Päivä"], arvot["Yhteensä"]))
+            tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f}\n".format(kuukausi, arvot["Yö"], arvot["Päivä"], arvot["Yhteensä"]))
         tiedosto.close()
     except OSError:
         print("Virhe tiedostoon kirjoittamisessa:")
