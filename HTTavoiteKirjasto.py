@@ -5,6 +5,7 @@
 # Päivämäärä: 30.10.2024
 # Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat
 # lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
+# Kaverini Erik (ei LUT opsiskelija) auttoi strukturaalisoimisessa, idea nestatuista hashmapeistä on hänen, ja hän myös näytti matriisin summaukseen liittyviä asioita (axis = 1 ja axis = 0 komennot)Säde Karanta auttoi debuggaamisessa ja käytin chatgpt:tä debuggaamiseen myös mutta riviäkään koodia ei ole siltä kopioitu
 # Mahdollisen vilppiselvityksen varalta vakuutan, että olen tehnyt itse
 # tämän tehtävän ja vain yllä mainitut henkilöt sekä lähteet ovat
 # vaikuttaneet siihen yllä mainituilla tavoilla.
@@ -15,7 +16,6 @@ import os
 import sys
 import numpy as np
 from datetime import datetime
-
 
 viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
 
@@ -45,7 +45,7 @@ def lueTiedosto(tiedostoNimi):
             riviS = strip.split(";")
             aika = time.strptime(riviS[0], "%d-%m-%Y %H:%M")
             kwhNight = float(riviS[1])
-            kwhDay = float(riviS[2])
+            kwhDay = int(float(riviS[2])
             TIEDOSTO.lista.append((aika, kwhNight, kwhDay))
             rivimaara += 1
             rivi = tiedosto.readline()
@@ -62,7 +62,7 @@ def analysoiTiedostoKuukaudet():
 
     for arvo in TIEDOSTO.lista:
 
-        aika = arvo[0]
+        aika= arvo[0]
         kwhNight = arvo[1]
         kwhDay = arvo[2]
 
@@ -132,11 +132,11 @@ def lueLampotila(tiedostoNimi):
             riviS = strip.split(",")
             paivaL = time.strptime(riviS[0], "%Y.%m.%d")
             lampotila = float(riviS[1])
-            TIEDOSTO.lampotila[time.strftime("%d-%m-%Y", paivaL)] = lampotila
+            TIEDOSTO.lampotila[time.strftime("%d.%m.%Y", paivaL)] = lampotila
             rivi = tiedosto.readline()
 
         tiedosto.close()
-        print("Tiedosto'{0}' luettu.".format(tiedostoNimi))
+        print("Tiedosto '{0}' luettu.".format(tiedostoNimi))
         print("Tiedot yhdistetty.")
     except OSError:
         print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
@@ -152,18 +152,19 @@ def kirjoitaLampotila(tiedostoNimi):
         paivittainenKulutus = {}
 
         for aika, kwhNight, kwhDay in TIEDOSTO.lista:
-            paiva = time.strftime("%d-%m-%Y", aika)
+            paiva = time.strftime("%d.%m.%Y", aika)
             if paiva not in paivittainenKulutus:
                 paivittainenKulutus[paiva] = {"Päivä": 0, "Yö": 0} #Lisää nestattuja hashmappeja
-            paivittainenKulutus[paiva]["Päivä"] +=kwhDay
-            paivittainenKulutus[paiva]["Yö"] += kwhNight
+            paivittainenKulutus[paiva]["Päivä"] = np.add(paivittainenKulutus[paiva]["Päivä"], float(kwhDay))
+            paivittainenKulutus[paiva]["Yö"] = np.add(paivittainenKulutus[paiva]["Yö"], float(kwhNight))
 
         for key, value in paivittainenKulutus.items():
             lampotila = TIEDOSTO.lampotila.get(key)
-            yhteensa = value["Yö"] + value["Päivä"]
+            yhteensa = np.add(value["Yö"], value["Päivä"])
             tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f};{4}\n".format(key, value["Yö"], value["Päivä"], yhteensa, lampotila))
 
         tiedosto.close()
+        print("Tiedosto '{0:s}' kirjoitettu.".format(tiedostoNimi))
     except OSError:
         print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
         sys.exit(0)
@@ -179,18 +180,28 @@ def analysoiMatriisi():
         elif tunti < 16:
             sarake = 1
         else:
-            sarake = 2
+            sarake= 2
         TIEDOSTO.viikkoMatriisi[viikko][sarake] += kulutus
-    print(TIEDOSTO.viikkoMatriisi)
+    print("Matriisianalyysi suoritettu.")
     return None
 
 def kirjoitaMatriisi(tiedostoNimi):
     try:
         tiedosto = open(tiedostoNimi, "w")
-        tiedosto.write("Viikko;Klo 0-8;Klo 8-16;Klo 16-24;Viikkosumma")
-        for viikko in range(TIEDOSTO.viikkoMatriisi):
-            viikkosumma = np.sum(TIEDOSTO.viikkomatriisi[viikko])
-            print(viikkosumma)
-    except Exception as e:
-        raise e
+        tiedosto.write("Viikko;Klo 0-8;Klo 8-16;Klo 16-24;Viikkosumma\n")
+        summat = np.sum(TIEDOSTO.viikkoMatriisi, axis = 1)
+        summatSarake = np.sum(TIEDOSTO.viikkoMatriisi, axis = 0)
+        summanSumma = 0
+        for i in range(len(summat)):
+            tiedosto.write("Vko {0};{1:.1f};{2:.1f};{3:.1f};{4:.1f}\n".format(i, TIEDOSTO.viikkoMatriisi[i][0], TIEDOSTO.viikkoMatriisi[i][1], TIEDOSTO.viikkoMatriisi[i][2], summat[i])) 
+        for summa in summat:
+            summanSumma += summa
+        tiedosto.write("Yhteensä;{0:.1f};{1:.1f};{2:.1f};{3:.1f}".format(summatSarake[0], summatSarake[1], summatSarake[2], summanSumma))
+
+        tiedosto.close()
+        print("Tiedosto '{0:s}' kirjoitettu.".format(tiedostoNimi))
+    except OSError:
+        print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
+        sys.exit(0)
+    return None
 #eof
