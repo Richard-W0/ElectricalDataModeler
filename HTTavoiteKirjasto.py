@@ -5,7 +5,6 @@
 # Päivämäärä: 30.10.2024
 # Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat
 # lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
-#
 # Mahdollisen vilppiselvityksen varalta vakuutan, että olen tehnyt itse
 # tämän tehtävän ja vain yllä mainitut henkilöt sekä lähteet ovat
 # vaikuttaneet siihen yllä mainituilla tavoilla.
@@ -14,12 +13,11 @@
 import time
 import os
 import sys
-#import numpy as np
 
 
 viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
 
-class Tiedosto:
+class TIEDOSTO:
     lista = []
     viikottainen = {}
     kuukausittainen = {}
@@ -33,9 +31,10 @@ def kysyNimi(n):
 
 
 def lueTiedosto(tiedostoNimi):
-    Tiedosto.lista.clear()
+    TIEDOSTO.lista.clear()
     try:
-        tiedosto = open(tiedostoNimi, "r")
+        tiedosto = open(tiedostoNimi, "r", encoding="UTF-8")
+        rivimaara = 0
         rivi = tiedosto.readline() #skipataan eka rivi
         rivi = tiedosto.readline()
         while len(rivi) > 0:
@@ -44,19 +43,23 @@ def lueTiedosto(tiedostoNimi):
             aika = time.strptime(riviS[0], "%d-%m-%Y %H:%M")
             kwhNight = float(riviS[1])
             kwhDay = float(riviS[2])
-            Tiedosto.lista.append((aika, kwhNight, kwhDay))
+            TIEDOSTO.lista.append((aika, kwhNight, kwhDay))
+            rivimaara += 1
             rivi = tiedosto.readline()
         tiedosto.close()
+        print("Tiedostosta '{0:s}' lisättiin listaan {1} datariviä.".format((tiedostoNimi), (rivimaara)))
     except OSError:
-        print("Tiedostoa ei löytynyt, yritä uudestaan.")
+        print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
+        sys.exit(0)
     return None
         
 
 
 def analysoiTiedostoKuukaudet():
-    Tiedosto.kuukausittainen.clear()
+    TIEDOSTO.kuukausittainen.clear()
+    kuukaudet = 0
 
-    for arvo in Tiedosto.lista:
+    for arvo in TIEDOSTO.lista:
 
         aika = arvo[0]
         kwhNight = arvo[1]
@@ -64,27 +67,30 @@ def analysoiTiedostoKuukaudet():
 
         kuukausiNimi = time.strftime("%b", aika)
 
-        if kuukausiNimi not in Tiedosto.kuukausittainen:
-            Tiedosto.kuukausittainen[kuukausiNimi] = {"Yö" : 0, "Päivä" : 0, "Yhteensä" : 0}
+        if kuukausiNimi not in TIEDOSTO.kuukausittainen:
+            TIEDOSTO.kuukausittainen[kuukausiNimi] = {"Yö" : 0, "Päivä" : 0, "Yhteensä" : 0}
 
-        Tiedosto.kuukausittainen[kuukausiNimi]["Yö"] += kwhNight / 1000 #muunnetaan kwh mwh:hon
-        Tiedosto.kuukausittainen[kuukausiNimi]["Päivä"] += kwhDay / 1000
-        Tiedosto.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kwhDay + kwhNight) / 1000
+        TIEDOSTO.kuukausittainen[kuukausiNimi]["Yö"] += kwhNight / 1000 #muunnetaan kwh mwh:hon
+        TIEDOSTO.kuukausittainen[kuukausiNimi]["Päivä"] += kwhDay / 1000
+        TIEDOSTO.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kwhDay + kwhNight) / 1000
+    for key in TIEDOSTO.kuukausittainen.items():
+        kuukaudet +=1
+    print("Kuukausittaiset summat laskettu", kuukaudet, "kuukaudelle.")
     return None
 
 def analysoiTiedostoPaivat():
-    Tiedosto.viikottainen.clear()
+    TIEDOSTO.viikottainen.clear()
 
     for paiva in viikonpaivat:
-        Tiedosto.viikottainen[paiva] = 0 #initialisoidaan hashmappi
+        TIEDOSTO.viikottainen[paiva] = 0 #initialisoidaan hashmappi
 
-    for aika, kwhNight, kwhDay in Tiedosto.lista:
+    for aika, kwhNight, kwhDay in TIEDOSTO.lista:
         viikonpaivaIndeksi = int(time.strftime("%w", aika))
         viikonpaivaIndeksi = (viikonpaivaIndeksi + 6) % 7 #if this works Im the smartest man alive
         viikonpaivaSuomeksi = viikonpaivat[viikonpaivaIndeksi]
 
         totalMwh = (kwhDay + kwhNight) / 1000
-        Tiedosto.viikottainen[viikonpaivaSuomeksi] += totalMwh
+        TIEDOSTO.viikottainen[viikonpaivaSuomeksi] += totalMwh
     return None
 
 
@@ -93,11 +99,13 @@ def kirjoitaTiedostoonKuukausittainen(tiedostoNimi):
         tiedosto = open(tiedostoNimi, "w")
         tiedosto.write("Kuukausittaiset kulutukset (MWh):\n")
         tiedosto.write("Kuukausi;Yö;Päivä;Yhteensä\n")
-        for kuukausi, arvot in Tiedosto.kuukausittainen.items():
+        for kuukausi, arvot in TIEDOSTO.kuukausittainen.items():
             tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f}\n".format(kuukausi, arvot["Yö"], arvot["Päivä"], arvot["Yhteensä"]))
         tiedosto.close()
+        print("Tiedosto '{0:s}' kirjoitettu.".format(tiedostoNimi))
+
     except OSError:
-        print("Virhe tiedostoon kirjoittamisessa:")
+        print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
         sys.exit(0)
     return None
 
@@ -105,17 +113,12 @@ def kirjoitaTiedostoonViikottainen(tiedostoNimi):
     try:
         tiedosto = open(tiedostoNimi, "w")
         tiedosto.write("Viikonpäivä;Kulutus (MWh)\n")
-        for paiva, kulutus in Tiedosto.viikottainen.items():
+        for paiva, kulutus in TIEDOSTO.viikottainen.items():
             tiedosto.write("{0};{1:.1f}\n".format(paiva, kulutus))
         tiedosto.close()
+        print("Tiedosto '{0:s}' kirjoitettu.".format(tiedostoNimi))
     except OSError:
-        print("Virhe tiedostoon kirjoittamisessa:")
+        print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
         sys.exit(0)
     return None
-
-#Lue tiedostoon OS error
-#if len data == 0 ei tietoaja analysoitavaksi
-#kirjoita tiedostoon OS error kanssa (sys.exit(0))
-#viikkoanalyysiin sama os error try exceptiin
-
 #eof
