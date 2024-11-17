@@ -30,12 +30,16 @@ def paaohjelma():
         valinta = valikko()
         if valinta == 1:
             nimiLuettava = lib.kysyNimi(1)
+            lib.lueTiedosto(nimiLuettava)
         elif valinta == 2:
-            nimiKirjoitettava = lib.kysyNimi(2)
+            lib.analysoiTiedostoKuukaudet()
         elif valinta == 3:
-            pass
+            nimiKirjoitettava = lib.kysyNimi(2)
+            lib.kirjoitaTiedostoonKuukausittainen(nimiKirjoitettava)
         elif valinta == 4:
-            pass
+            lib.analysoiTiedostoPaivat()
+            nimiKirjoitettava = lib.kysyNimi(2)
+            lib.kirjoitaTiedostoonViikottainen(nimiKirjoitettava)
         elif valinta == 0:
             print("Lopetetaan.")
             break
