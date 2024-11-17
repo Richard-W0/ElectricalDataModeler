@@ -14,7 +14,7 @@ import time
 import os
 import sys
 import numpy as np
-from datetime import datettime
+from datetime import datetime
 
 
 viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
@@ -126,22 +126,42 @@ def kirjoitaTiedostoonViikottainen(tiedostoNimi):
         sys.exit(0)
     return None
 
-def lueLampotila():
+def lueLampotila(tiedostoNimi):
     try:
-        tiedosto = open(tiedostoNimi, "r")
+        tiedosto = open(tiedostoNimi, "r", encoding="UTF-8")
         rivi = tiedosto.readline() #skipataan eka rivi
         rivi = tiedosto.readline()
         while len(rivi) > 0:
             strip = rivi.strip()
-            riviS = strip.split(";")
+            riviS = strip.split(",")
             paivaL = time.strptime(riviS[0], "%Y.%m.%d")
             lampotila = float(riviS[1])
             TIEDOSTO.lampotila[time.strftime("%d-%m-%Y", paivaL)] = lampotila
+            rivi = tiedosto.readline()
+
+        tiedosto.close()
+        print("Tiedosto'{0}' luettu.".format(tiedostoNimi))
+        print("Tiedot yhdistetty.")
+    except OSError:
+        print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
+        sys.exit(0)
+
+def kirjoitaLampotila(tiedostoNimi):
+    try:
+        tiedosto = open(tiedostoNimi, "w")
+        tiedosto.write("Päivittäiset kulutukset (kWh) ja lämpötila:\n")
+        tiedosto.write("Pvm;Yö;Päivä;Yhteensä;Lämpötila\n")
+
+        for aika, kwhNight, kwhDay in TIEDOSTO.lista:
+            paiva = time.strftime("%d.%m.%Y", aika)
+            lampotila = TIEDOSTO.lampotila.get(paiva)
+            tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f};{4}\n".format(paiva, kwhNight, kwhDay, kwhNight + kwhDay, lampotila))
 
         tiedosto.close()
     except OSError:
         print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
         sys.exit(0)
+
 
         
 #eof

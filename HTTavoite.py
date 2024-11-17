@@ -55,9 +55,11 @@ def paaohjelma():
                 nimiKirjoitettava = lib.kysyNimi(2)
                 lib.kirjoitaTiedostoonViikottainen(nimiKirjoitettava)
         elif valinta == 5:
-            pass
+            nimiLuettava = lib.kysyNimi(1)
+            lib.lueLampotila(nimiLuettava)
         elif valinta == 6:
-            pass
+            nimiKirjoitettava = lib.kysyNimi(2)
+            lib.kirjoitaLampotila(nimiKirjoitettava)
         elif valinta == 7:
             pass
         elif valinta == 0:
