@@ -92,11 +92,20 @@ def kirjoitaTiedostoonKuukausittainen(tiedostoNimi):
             tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f}\n".format(
                 kuukausi, arvot["Yö"], arvot["Päivä"], arvot["Yhteensä"]))
         tiedosto.close()
-    except Exception as e:
-        print("Virhe tiedostoon kirjoittamisessa:", e)
+    except OSError:
+        print("Virhe tiedostoon kirjoittamisessa:")
+        sys.exit(0)
 
 def kirjoitaTiedostoonViikottainen(tiedostoNimi):
-    pass
+    try:
+        tiedosto = open(tiedostoNimi, "w")
+        tiedosto.write("Viikonpäivä;Kulutus (MWh)\n")
+        for paiva, kulutus in Tiedosto.viikottainen.items():
+            tiedosto.write("{0};{1:.1f}\n".format(paiva, kulutus))
+        tiedosto.close()
+    except OSError:
+        print("Virhe tiedostoon kirjoittamisessa:")
+        sys.exit(0)
 
 #Lue tiedostoon OS error
 #if len data == 0 ei tietoaja analysoitavaksi
