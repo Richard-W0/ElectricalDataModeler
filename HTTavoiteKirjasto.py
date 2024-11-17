@@ -155,15 +155,14 @@ def kirjoitaLampotila(tiedostoNimi):
         paivittainenKulutus = {}
 
         for aika, kwhNight, kwhDay in TIEDOSTO.lista:
-            paiva = time.strftime("%d.%m.%Y", aika)
+            paiva = time.strftime("%d-%m-%Y", aika)
             if paiva not in paivittainenKulutus:
                 paivittainenKulutus[paiva] = {"Päivä": 0, "Yö": 0} #Lisää nestattuja hashmappeja
             paivittainenKulutus[paiva]["Päivä"] +=kwhDay
             paivittainenKulutus[paiva]["Yö"] += kwhNight
 
         for key, value in paivittainenKulutus.items():
-                
-            lampotila = TIEDOSTO.lampotila.get(paiva)
+            lampotila = TIEDOSTO.lampotila.get(key)
             yhteensa = value["Yö"] + value["Päivä"]
             tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f};{4}\n".format(key, value["Yö"], value["Päivä"], yhteensa, lampotila))
 
