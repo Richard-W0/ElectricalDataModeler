@@ -12,8 +12,8 @@
 ######################################################################
 # Tehtävä Harjoitustyö
 import time
+import os
 import sys
-import math
 import numpy as np
 
 
@@ -79,9 +79,24 @@ def analysoiTiedostoPaivat():
         viikonpaivaIndeksi = int(time.strftime("%w", aika))
         viikonpaivaSuomeksi = viikonpaiaivat[viikonpaivaIndeksi]
 
+        totalMwh = (kwhDay + kwhNight) / 1000
+        Tiedosto.viikottainen[viikonpaivaSuomeksi] += totalMwh
 
-def kirjoitaTiedostoon():
-    #kirjoittaa tiedostoon
+
+def kirjoitaTiedostoonKuukausittainen(tiedostoNimi):
+    try:
+        tiedosto = open(tiedostoNimi, "w")
+        tiedosto.write("Kuukausittaiset kulutukset (MWh):\n")
+        tiedosto.write("Kuukausi;Yö;Päivä;Yhteensä\n")
+        for kuukausi, arvot in Tiedosto.kuukausittainen.items():
+            tiedosto.write("{0};{1:.1f};{2:.1f};{3:.1f}\n".format(
+                kuukausi, arvot["Yö"], arvot["Päivä"], arvot["Yhteensä"]))
+        tiedosto.close()
+    except Exception as e:
+        print("Virhe tiedostoon kirjoittamisessa:", e)
+
+def kirjoitaTiedostoonViikottainen(tiedostoNimi):
+    pass
 
 #Lue tiedostoon OS error
 #if len data == 0 ei tietoaja analysoitavaksi
