@@ -19,6 +19,9 @@ def valikko():
 2) Analysoi
 3) Kirjoita tiedosto
 4) Analysoi viikonpäivittäiset tulokset
+5) Lue ja yhdistä lämpötilatiedosto
+6) Kirjoita yhdistetty data tiedostoon
+7) Analysoi viikoittaiset tulokset
 0) Lopeta"""
     print(valikko)
     return int(input("Anna valintasi: "))
@@ -51,6 +54,12 @@ def paaohjelma():
                 lib.analysoiTiedostoPaivat()
                 nimiKirjoitettava = lib.kysyNimi(2)
                 lib.kirjoitaTiedostoonViikottainen(nimiKirjoitettava)
+        elif valinta == 5:
+            pass
+        elif valinta == 6:
+            pass
+        elif valinta == 7:
+            pass
         elif valinta == 0:
             print("Lopetetaan.")
             break

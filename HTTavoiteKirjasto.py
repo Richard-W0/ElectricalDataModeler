@@ -13,6 +13,8 @@
 import time
 import os
 import sys
+import numpy as np
+from datetime import datettime
 
 
 viikonpaivat = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"]
@@ -21,6 +23,8 @@ class TIEDOSTO:
     lista = []
     viikottainen = {}
     kuukausittainen = {}
+    lampotila = {}
+    viikkoMatriisi = np.zeros((54, 3), dtype=float) #dateitime laskee viikkojen sijaan maanantait joten 54
 
 def kysyNimi(n):
     if n == 1:
@@ -121,4 +125,23 @@ def kirjoitaTiedostoonViikottainen(tiedostoNimi):
         print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
         sys.exit(0)
     return None
+
+def lueLampotila():
+    try:
+        tiedosto = open(tiedostoNimi, "r")
+        rivi = tiedosto.readline() #skipataan eka rivi
+        rivi = tiedosto.readline()
+        while len(rivi) > 0:
+            strip = rivi.strip()
+            riviS = strip.split(";")
+            paivaL = time.strptime(riviS[0], "%Y.%m.%d")
+            lampotila = float(riviS[1])
+            TIEDOSTO.lampotila[time.strftime("%d-%m-%Y", paivaL)] = lampotila
+
+        tiedosto.close()
+    except OSError:
+        print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
+        sys.exit(0)
+
+        
 #eof
