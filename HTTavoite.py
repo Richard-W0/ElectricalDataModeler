@@ -1,11 +1,10 @@
 ######################################################################
 # CT60A0203 Ohjelmoinnin perusteet
 # Tekijä: Richard Wong
-# Opiskelijanumero: 002584058
+# Opiskelijanumero: 
 # Päivämäärä: 30.10.2024
 # Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat
 # lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
-# Kaverini Erik (ei LUT opsiskelija) auttoi strukturaalisoimisessa, idea nestatuista hashmapeistä on hänen, Säde Karanta auttoi debuggaamisessa ja käytin chatgpt:tä debuggaamiseen myös mutta riviäkään koodia ei ole siltä kopioitu
 # Mahdollisen vilppiselvityksen varalta vakuutan, että olen tehnyt itse
 # tämän tehtävän ja vain yllä mainitut henkilöt sekä lähteet ovat
 # vaikuttaneet siihen yllä mainituilla tavoilla.
