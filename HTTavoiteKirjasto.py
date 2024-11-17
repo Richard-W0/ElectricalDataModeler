@@ -33,7 +33,6 @@ def kysyNimi(n):
         return input("Anna kirjoitettavan tiedoston nimi: ")
     return None
 
-
 def lueTiedosto(tiedostoNimi):
     TIEDOSTO.lista.clear()
     try:
@@ -56,8 +55,6 @@ def lueTiedosto(tiedostoNimi):
         print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
         sys.exit(0)
     return None
-        
-
 
 def analysoiTiedostoKuukaudet():
     TIEDOSTO.kuukausittainen.clear()
@@ -96,7 +93,6 @@ def analysoiTiedostoPaivat():
         totalMwh = (kwhDay + kwhNight) / 1000
         TIEDOSTO.viikottainen[viikonpaivaSuomeksi] += totalMwh
     return None
-
 
 def kirjoitaTiedostoonKuukausittainen(tiedostoNimi):
     try:
@@ -145,6 +141,7 @@ def lueLampotila(tiedostoNimi):
     except OSError:
         print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
         sys.exit(0)
+    return None
 
 def kirjoitaLampotila(tiedostoNimi):
     try:
@@ -170,7 +167,30 @@ def kirjoitaLampotila(tiedostoNimi):
     except OSError:
         print("Tiedoston '{0:s}' käsittelyssä virhe, lopetetaan.".format(tiedostoNimi))
         sys.exit(0)
+    return None
 
+def analysoiMatriisi():
+    for aika, kwhNight, kwhDay in TIEDOSTO.lista:
+        viikko = int(time.strftime("%W", aika))
+        tunti = aika.tm_hour
+        kulutus = (kwhDay + kwhNight) / 1000
+        if tunti < 8:
+            sarake = 0
+        elif tunti < 16:
+            sarake = 1
+        else:
+            sarake = 2
+        TIEDOSTO.viikkoMatriisi[viikko][sarake] += kulutus
+    print(TIEDOSTO.viikkoMatriisi)
+    return None
 
-        
+def kirjoitaMatriisi(tiedostoNimi):
+    try:
+        tiedosto = open(tiedostoNimi, "w")
+        tiedosto.write("Viikko;Klo 0-8;Klo 8-16;Klo 16-24;Viikkosumma")
+        for viikko in range(TIEDOSTO.viikkoMatriisi):
+            viikkosumma = np.sum(TIEDOSTO.viikkomatriisi[viikko])
+            print(viikkosumma)
+    except Exception as e:
+        raise e
 #eof

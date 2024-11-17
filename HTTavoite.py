@@ -61,7 +61,7 @@ def paaohjelma():
             nimiKirjoitettava = lib.kysyNimi(2)
             lib.kirjoitaLampotila(nimiKirjoitettava)
         elif valinta == 7:
-            pass
+            lib.analysoiMatriisi()
         elif valinta == 0:
             print("Lopetetaan.")
             break
