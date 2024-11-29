@@ -1,16 +1,3 @@
-######################################################################
-# CT60A0203 Ohjelmoinnin perusteet
-# Tekijä: Richard Wong
-# Opiskelijanumero: 
-# Päivämäärä: 30.10.2024
-# Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat
-# lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
-# Kaverini Erik (ei LUT opsiskelija) auttoi strukturaalisoimisessa, idea nestatuista hashmapeistä on hänen, ja hän myös näytti matriisin summaukseen liittyviä asioita (axis = 1 ja axis = 0 komennot)Säde Karanta auttoi debuggaamisessa ja käytin chatgpt:tä debuggaamiseen myös mutta riviäkään koodia ei ole siltä kopioitu
-# Mahdollisen vilppiselvityksen varalta vakuutan, että olen tehnyt itse
-# tämän tehtävän ja vain yllä mainitut henkilöt sekä lähteet ovat
-# vaikuttaneet siihen yllä mainituilla tavoilla.
-######################################################################
-# Tehtävä Harjoitustyö
 import time
 import os
 import sys
@@ -24,7 +11,7 @@ class TIEDOSTO:
     viikottainen = {}
     kuukausittainen = {}
     lampotila = {}
-    viikkoMatriisi = np.zeros((54, 3), dtype=float) #dateitime laskee viikkojen sijaan maanantait joten 54
+    viikkoMatriisi = np.zeros((54, 3), dtype=float) #dateitime counts mondays instead of weeks so 54
 
 def kysyNimi(n):
     if n == 1:
@@ -38,7 +25,7 @@ def lueTiedosto(tiedostoNimi):
     try:
         tiedosto = open(tiedostoNimi, "r", encoding="UTF-8")
         rivimaara = 0
-        rivi = tiedosto.readline() #skipataan eka rivi
+        rivi = tiedosto.readline() #skip the header row
         rivi = tiedosto.readline()
         while len(rivi) > 0:
             strip = rivi.strip()
@@ -71,7 +58,7 @@ def analysoiTiedostoKuukaudet():
         if kuukausiNimi not in TIEDOSTO.kuukausittainen:
             TIEDOSTO.kuukausittainen[kuukausiNimi] = {"Yö" : 0, "Päivä" : 0, "Yhteensä" : 0}
 
-        TIEDOSTO.kuukausittainen[kuukausiNimi]["Yö"] += kwhNight / 1000 #muunnetaan kwh mwh:hon
+        TIEDOSTO.kuukausittainen[kuukausiNimi]["Yö"] += kwhNight / 1000 #convert kw/h to mw/h
         TIEDOSTO.kuukausittainen[kuukausiNimi]["Päivä"] += kwhDay / 1000
         TIEDOSTO.kuukausittainen[kuukausiNimi]["Yhteensä"] += (kwhDay + kwhNight) / 1000
     for key in TIEDOSTO.kuukausittainen.items():
@@ -83,7 +70,7 @@ def analysoiTiedostoPaivat():
     TIEDOSTO.viikottainen.clear()
 
     for paiva in viikonpaivat:
-        TIEDOSTO.viikottainen[paiva] = 0 #initialisoidaan hashmappi
+        TIEDOSTO.viikottainen[paiva] = 0 #initializing the hashmap
 
     for aika, kwhNight, kwhDay in TIEDOSTO.lista:
         viikonpaivaIndeksi = int(time.strftime("%w", aika))
@@ -125,7 +112,7 @@ def kirjoitaTiedostoonViikottainen(tiedostoNimi):
 def lueLampotila(tiedostoNimi):
     try:
         tiedosto = open(tiedostoNimi, "r", encoding="UTF-8")
-        rivi = tiedosto.readline() #skipataan eka rivi
+        rivi = tiedosto.readline() #skip the header row
         rivi = tiedosto.readline()
         while len(rivi) > 0:
             strip = rivi.strip()
@@ -154,9 +141,9 @@ def kirjoitaLampotila(tiedostoNimi):
         for aika, kwhNight, kwhDay in TIEDOSTO.lista:
             paiva = time.strftime("%d.%m.%Y", aika)
             if paiva not in paivittainenKulutus:
-                paivittainenKulutus[paiva] = {"Päivä": 0, "Yö": 0} #Lisää nestattuja hashmappeja
+                paivittainenKulutus[paiva] = {"Päivä": 0, "Yö": 0} #more nested hashmaps
             paivittainenKulutus[paiva]["Päivä"] = np.add(paivittainenKulutus[paiva]["Päivä"], float(kwhDay))
-            paivittainenKulutus[paiva]["Yö"] = np.add(paivittainenKulutus[paiva]["Yö"], float(kwhNight))
+            paivittainenKulutus[paiva]["Yö"] = np.add(paivittainenKulutus[paiva]["Yö"], float(kwhNight)) #attemtp to fix rounding errors, did not work
 
         for key, value in paivittainenKulutus.items():
             lampotila = TIEDOSTO.lampotila.get(key)
