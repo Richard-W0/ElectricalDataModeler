@@ -4,3 +4,5 @@ This is the main assignment for my programming course so there will be some limi
 2. Files have to be opened and closed manually.
 3. F string is not allowed.
 4. Some python functions like min, max and sum are not allowed.
+
+This program takes in preprocessed and formatted electricity usage and temperature time and outputs them into a more desirable format and combines them. Some example files are provided as .txt files
