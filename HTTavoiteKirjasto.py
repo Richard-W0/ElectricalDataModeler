@@ -32,7 +32,7 @@ def lueTiedosto(tiedostoNimi):
             riviS = strip.split(";")
             aika = time.strptime(riviS[0], "%d-%m-%Y %H:%M")
             kwhNight = float(riviS[1])
-            kwhDay = int(float(riviS[2])
+            kwhDay = int(float(riviS[2]))
             TIEDOSTO.lista.append((aika, kwhNight, kwhDay))
             rivimaara += 1
             rivi = tiedosto.readline()
